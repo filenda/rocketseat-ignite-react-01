@@ -16,3 +16,15 @@
   gap: 2rem;
   align-items: flex-start;
 }
+
+@media (max-width: 768px) {
+  html{
+    /* TALK: This works because we are using 'rem' -aka relative measures - (the default font-size is 16px) */
+    font-size: 87.5%;
+  }
+
+  .wrapper {
+    /* TALK: For mobile screens (width < 768px) the grid will have only 1 column instead of 2 */
+    grid-template-columns: 1fr;
+  }
+}
