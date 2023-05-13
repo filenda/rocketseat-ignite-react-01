@@ -45,9 +45,19 @@ export function Post({ author, publishedAt, content }) {
     setNewCommentText("");
   };
 
-  const newCommentChange = (e) => {
+  const handleNewCommentChange = (e) => {
+    //TALK: This is a html/react bug IMO but you have to clear the custom
+    // validity set before (to not allow empty string in comment textarea input) in order for the form to accept the new inputed value
+    e.target.setCustomValidity("");
+
     setNewCommentText(e.target.value);
   };
+
+  const handleNewCommentInvalid = (e) => {
+    e.target.setCustomValidity("Esse campo é obrigatório");
+  };
+
+  const isNewCommentEmpty = newCommentText.length === 0;
 
   return (
     <article className={styles.post}>
@@ -92,11 +102,15 @@ export function Post({ author, publishedAt, content }) {
         <textarea
           name="comment"
           placeholder="Deixe um comentário"
-          onChange={(e) => newCommentChange(e)}
+          onChange={(e) => handleNewCommentChange(e)}
           value={newCommentText}
+          onInvalid={handleNewCommentInvalid}
+          required
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={isNewCommentEmpty}>
+            Publicar
+          </button>
         </footer>
       </form>
       <div className={styles.commentList}>
