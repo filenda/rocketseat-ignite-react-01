@@ -28,6 +28,12 @@ export function Post({ author, publishedAt, content }) {
     addSuffix: true,
   });
 
+  const deleteComment = (comment) => {
+    const commentsWithoutDeletedOne = comments.filter((c) => c !== comment);
+
+    setComments(commentsWithoutDeletedOne);
+  };
+
   const handleCreateNewComment = (e) => {
     e.preventDefault();
 
@@ -97,7 +103,7 @@ export function Post({ author, publishedAt, content }) {
         {comments.map((c) => (
           //TALK: It's is not cool to use the map index as the key
           //key properties in array maps serve one main purpose: to avoid unnessessary re-rendering
-          <Comment key={c} content={c} />
+          <Comment key={c} content={c} onDeleteComment={deleteComment} />
         ))}
       </div>
     </article>
