@@ -10,8 +10,16 @@ export function Comment({ content, onDeleteComment }) {
     onDeleteComment(content);
   };
 
+  // TALK: State self depending updates: whenever you want to update a state valu
+  // e with the most recent value of itself, it is recommended to use the arrow
+  // function as the parameter of the setState like in the example below.
+  // In this case, the parameter ‘state’ holds the most recent value of that state
+  // (likeCount), and it is more adequate than using the ‘likeCount’ variable value
+  // decalred in the first line of code of this component.
   const handleLikeComment = () => {
-    setLikeCount(likeCount + 1);
+    setLikeCount((state) => {
+      return state + 1;
+    });
   };
 
   return (
@@ -35,11 +43,11 @@ export function Comment({ content, onDeleteComment }) {
           <p>{content}</p>
         </div>
         <footer>
-          {/* <button onClick={() => handleLikeComment()}> */}
-          {/* TALK: This (below) is actually an anonymous function declaration */}
-          {/* If it was left like this : <button onClick={setLikeCount(likeCount + 1)}> 
-          than react would enter an infinite loop of component rerendering*/}
-          <button onClick={() => setLikeCount(likeCount + 1)}>
+          <button onClick={() => handleLikeComment()}>
+            {/* TALK: This (below) is actually an anonymous function declaration */}
+            {/* If it was left like this : <button onClick={setLikeCount(likeCount + 1)}> */}
+            {/* than react would enter an infinite loop of component rerendering */}
+            {/* <button onClick={() => setLikeCount(likeCount + 1)}> */}
             <ThumbsUp />
             Aplaudir <span>{likeCount}</span>
           </button>
