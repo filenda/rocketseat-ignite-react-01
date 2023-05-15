@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { Avatar } from "./Avatar";
 import styles from "./Comment.module.css";
 import { Trash, ThumbsUp } from "phosphor-react";
 
 export function Comment({ content, onDeleteComment }) {
+  const [likeCount, setLikeCount] = useState(0);
+
   const handleDeleteComment = () => {
     onDeleteComment(content);
+  };
+
+  const handleLikeComment = () => {
+    setLikeCount(likeCount + 1);
   };
 
   return (
@@ -28,9 +35,13 @@ export function Comment({ content, onDeleteComment }) {
           <p>{content}</p>
         </div>
         <footer>
-          <button>
+          {/* <button onClick={() => handleLikeComment()}> */}
+          {/* TALK: This (below) is actually an anonymous function declaration */}
+          {/* If it was left like this : <button onClick={setLikeCount(likeCount + 1)}> 
+          than react would enter an infinite loop of component rerendering*/}
+          <button onClick={() => setLikeCount(likeCount + 1)}>
             <ThumbsUp />
-            Aplaudir <span>20</span>
+            Aplaudir <span>{likeCount}</span>
           </button>
         </footer>
       </div>
